@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ProgressBar from '../progressBar/ProgressBar.js'
 
 class StandardsListView extends React.Component {
 
@@ -80,6 +81,9 @@ class StandardsListView extends React.Component {
                 <div className="list-view-pf-additional-info-item">
                   <span className="pficon pficon-error-circle-o"></span>
                   <strong>35</strong> Non-compliant Items
+                </div>
+                <div style="width:350px; height:20px;">
+                <ProgressBar percentage="60"/>
                 </div>
               </div>
             </div>
