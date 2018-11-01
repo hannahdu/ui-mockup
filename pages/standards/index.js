@@ -2,10 +2,14 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import StandardsListView from '../../components/ListView/StandardsListView';
 import constants from '../../core/constants';
+import {addStandardsControlFamilies, getStandardsComplianceData} from '../../utils/open-control-utils.js';
 
 class AppsPage extends React.Component {
-
-  state = { apps: [] };
+  constructor(props){
+    super(props);
+    this.state = { apps: [] };
+    this.apps = []; 
+  }
 
   componentDidMount() {
     document.title = 'Security Central | Standards';
@@ -17,13 +21,21 @@ class AppsPage extends React.Component {
 
   // Data stored in json/standards.json, which is defined in
   // core/constants.js
-  getApps() {
+  getApps = ()=> {
     let that = this;
     fetch(constants.get_standards_url).then(r => r.json())
-      .then(data => {
-        that.setState({apps : data})
+      .then(standards => {
+        return addStandardsControlFamilies(standards);
       })
-      .catch(e => console.log("ERROR: Something went wrong opening standards definition"));
+      .then(standards=>{
+        return getStandardsComplianceData(standards);
+      })
+      .then((result)=>{
+        // console.log('result',result)
+        this.apps = result;
+        that.setState({apps : this.apps});
+      })
+      // .catch(e => console.log("ERROR: Something went wrong opening standards definition"));
   }
 
   render() {

@@ -1,8 +1,17 @@
 import React, { PropTypes } from 'react';
+<<<<<<< HEAD
 import ProgressBar from '../progressBar/ProgressBar.js'
+=======
+import StandardTableView from '../TableView/StandardTableView'
+import ListViewBase from './ListViewBase'
+import ComplianceProgress from './ComplianceProgress'
+>>>>>>> b992b6b81b55eccb3ebc749149c81e7beca7d34f
 
-class StandardsListView extends React.Component {
+class StandardsListView extends ListViewBase {
 
+  constructor(props){
+    super(props);
+  }
   componentDidMount() {
     this.bindExpand();
   }
@@ -16,36 +25,13 @@ class StandardsListView extends React.Component {
     this.unbind();
   }
 
-  bindExpand() {
-    // click the list-view heading then expand a row
-    $(".list-group-item-header").click(function(event){
-      if(!$(event.target).is("button, a, input, .fa-ellipsis-v")){
-        $(this).find(".fa-angle-right").toggleClass("fa-angle-down")
-          .end().parent().toggleClass("list-view-pf-expand-active")
-          .find(".list-group-item-container").toggleClass("hidden");
-      }
-    });
-
-    // click the close button, hide the expand row and remove the active status
-    $(".list-group-item-container .close").on("click", function (){
-      $(this).parent().addClass("hidden")
-        .parent().removeClass("list-view-pf-expand-active")
-        .find(".fa-angle-right").removeClass("fa-angle-down");
-    });
-  }
-
-  unbind() {
-    $(".list-group-item-header").off('click');
-    $(".list-group-item-container .close").off('click');
-  }
-
   render() {
-    const { apps } = this.props; // eslint-disable-line no-use-before-define
-
+    // eslint-disable-line no-use-before-define
+    
     return (
       <div className="list-group list-view-pf list-view-pf-view">
 
-        {apps.map((app,i) =>
+        {this.props.apps.map((app,i) =>
         <div className="list-group-item" key={i}>
 
           <div className="list-group-item-header">
@@ -65,6 +51,7 @@ class StandardsListView extends React.Component {
                   { app.name }
                 </div>
               </div>
+<<<<<<< HEAD
               <div className="list-view-pf-additional-info">
                 <div className="list-view-pf-additional-info-item">
                   <span className="pficon pficon-orders"></span>
@@ -86,6 +73,10 @@ class StandardsListView extends React.Component {
                 <ProgressBar percentage="60"/>
                 </div>
               </div>
+=======
+
+                <ComplianceProgress app={app} />
+>>>>>>> b992b6b81b55eccb3ebc749149c81e7beca7d34f
             </div>
           </div>
         </div>
@@ -105,17 +96,16 @@ class StandardsListView extends React.Component {
             <div className="col-md-9">
               <dl className="dl-horizontal">
                 <dt>Control Familes:</dt>
-                <dd>##</dd>
+                <dd>{app.controlFamilies}</dd>
                 <dt>Total Controls: </dt>
-                <dd>##</dd>
+                <dd>{app.totalControls}</dd>
                 <dt>Inherited Compliance: </dt>
-                <dd>##</dd>
+                <dd>{app.inheritedCompliance}</dd>
                 <dt>Procedural Controls: </dt>
-                <dd>##</dd>
+                <dd>{app.proceduralControls}</dd>
                 <dt>Technical Controls: </dt>
-                <dd>##</dd>
+                <dd>{app.technicalControls}</dd>
               </dl>
-
             </div>
           </div>
         </div>
